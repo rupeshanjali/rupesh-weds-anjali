@@ -93,6 +93,7 @@ section{padding:80px 16px}
 .arch .w{margin:0;font-size:1.1rem;color:var(--ink-2)}
 .arch.main{background:var(--maroon);border-color:var(--marigold);color:#FFF3D6}
 .arch.main h3{color:var(--gold-l)}.arch.main .w{color:#FBE4C0}
+.loc{margin:4px 0 0;display:inline-flex;align-items:center;gap:6px;font-size:1rem;font-weight:700;color:var(--maroon);background:var(--sand);padding:4px 14px;border-radius:999px}
 .badge{margin:4px 0 0;font-size:.95rem;font-weight:700;color:var(--maroon-dd);background:var(--marigold);padding:4px 12px;border-radius:999px}
 .venue-row{display:flex;flex-wrap:wrap;gap:32px;align-items:stretch}
 .panel{flex:1 1 380px;min-width:0;border-radius:26px;padding:40px 30px;display:flex;flex-direction:column;gap:14px}
@@ -156,11 +157,90 @@ footer .tel{display:inline-flex;align-items:center;gap:10px;min-height:44px;colo
 .js .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
 .js .reveal.in{opacity:1;transform:none}
 .fade{animation:rise .5s ease both}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none}}
+
+/* ---------- extra motion ---------- */
+/* intro: temple doors part to reveal the invitation */
+.intro{display:none}
+.js .intro{position:fixed;inset:0;z-index:100;display:flex;pointer-events:none}
+.intro .door{flex:1;position:relative;background:radial-gradient(circle at 100% 50%,#8E1527 0%,#4A0A14 75%);transition:transform 1.5s cubic-bezier(.75,0,.2,1)}
+.intro .door.r{background:radial-gradient(circle at 0% 50%,#8E1527 0%,#4A0A14 75%)}
+.intro .door::before{content:"";position:absolute;inset:22px 12px 22px 22px;border:2px solid rgba(242,169,0,.55);border-radius:14px}
+.intro .door.r::before{inset:22px 22px 22px 12px}
+.intro .door::after{content:"";position:absolute;top:50%;right:26px;width:14px;height:56px;margin-top:-28px;border-radius:8px;background:linear-gradient(#FFD77A,#C98A1A)}
+.intro .door.r::after{right:auto;left:26px}
+.intro .seal{position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;background:radial-gradient(circle,#FFE7A8 0%,#F2A900 60%,#B7791F 100%);box-shadow:0 0 0 6px rgba(242,169,0,.25),0 0 60px 10px rgba(242,169,0,.45);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:2.3rem;color:#4A0A14;animation:pulse 1.6s ease-in-out infinite;transition:opacity .8s ease,transform 1s ease}
+.intro.open .door.l{transform:translateX(-102%)}
+.intro.open .door.r{transform:translateX(102%)}
+.intro.open .seal{animation:none;opacity:0;transform:scale(1.8)}
+.js .intro.gone{display:none}
+.loading .rise,.loading .couple .name,.loading .ring-l,.loading .ring-r{animation-play-state:paused}
+
+/* scroll progress */
+nav .progress{position:absolute;left:0;bottom:-3px;height:3px;width:100%;background:linear-gradient(90deg,#FFF1C1,#F2A900,#E86A10);transform-origin:0 50%;transform:scaleX(0)}
+
+/* hero: breathing glow, twinkling stars, names, rings */
+header::before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 50% 42%,rgba(242,169,0,.22),transparent 50%);animation:breathe 7s ease-in-out infinite;pointer-events:none}
+.spark{position:absolute;background:#FFE7A8;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);animation:twinkle 3s ease-in-out infinite}
+.couple .name{animation:nameIn 1.5s cubic-bezier(.2,.7,.2,1) .6s both}
+.couple .name:last-child{animation-delay:.9s}
+.ring-l{animation:ringL 1.4s cubic-bezier(.2,.7,.2,1) 1s both}
+.ring-r{animation:ringR 1.4s cubic-bezier(.2,.7,.2,1) 1s both}
+.countdown b.flip{animation:flip .5s cubic-bezier(.2,.7,.2,1)}
+.countdown div{transition:transform .3s ease,border-color .3s ease}
+.countdown div:hover{transform:translateY(-4px);border-color:#F2A900}
+
+/* buttons: gold sheen + lift */
+.btn{transition:transform .25s ease,box-shadow .25s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-gold,.btn-maroon,.btn-wa{position:relative;overflow:hidden}
+.btn-gold::after,.btn-maroon::after,.btn-wa::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.45) 50%,transparent 65%);transform:translateX(-120%);animation:sheen 5s ease-in-out infinite;pointer-events:none}
+
+/* cards: floating icons, light sweep on hover */
+.arch svg{animation:bob 3.6s ease-in-out infinite}
+.arch:nth-child(2) svg{animation-delay:-.9s}.arch:nth-child(3) svg{animation-delay:-1.8s}.arch:nth-child(4) svg{animation-delay:-2.7s}
+.arch,.person,.fam{position:relative;overflow:hidden}
+.arch::after,.person::after,.fam::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,231,168,.55),transparent);transform:skewX(-18deg);transition:left .9s ease;pointer-events:none}
+.arch:hover::after,.person:hover::after,.fam:hover::after{left:130%}
+.arch:hover{transform:translateY(-8px)!important}
+.person:hover,.fam:hover{transform:translateY(-6px)!important;box-shadow:0 26px 44px -24px rgba(74,10,20,.55)}
+
+/* ornamental dividers that draw themselves */
+.flourish{display:flex;justify-content:center;margin:6px 0}
+.draw path{stroke-dasharray:320;stroke-dashoffset:320;transition:stroke-dashoffset 2s cubic-bezier(.4,0,.2,1) .2s}
+.draw.in path{stroke-dashoffset:0}
+
+/* RSVP: floating lanterns + petal burst */
+.rsvp-sec{position:relative;overflow:hidden}
+.rsvp-in{position:relative;z-index:1}
+.lanterns{position:absolute;inset:0;pointer-events:none}
+.lantern{position:absolute;bottom:-70px;border-radius:7px 7px 11px 11px;background:radial-gradient(circle at 50% 62%,#FFF1C1 0%,#F2A900 45%,#C2410C 100%);box-shadow:0 0 22px 6px rgba(242,169,0,.35);animation:floatUp linear infinite}
+.lantern::before{content:"";position:absolute;top:-4px;left:25%;right:25%;height:4px;border-radius:2px;background:#7A1020}
+.burst{position:fixed;width:14px;height:14px;border-radius:60% 0 60% 0;pointer-events:none;z-index:90;animation:burst 1.6s cubic-bezier(.15,.7,.3,1) forwards}
+
+@keyframes breathe{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
+@keyframes nameIn{from{opacity:0;filter:blur(14px);letter-spacing:.35em}to{opacity:1;filter:blur(0);letter-spacing:normal}}
+@keyframes ringL{from{transform:translateX(-12px);opacity:0}to{transform:none;opacity:1}}
+@keyframes ringR{from{transform:translateX(12px);opacity:0}to{transform:none;opacity:1}}
+@keyframes flip{from{transform:rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes sheen{0%,60%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes floatUp{0%{transform:translate(0,0);opacity:0}10%{opacity:.85}50%{transform:translate(18px,-55vh)}90%{opacity:.7}100%{transform:translate(-10px,-115vh);opacity:0}}
+@keyframes burst{0%{transform:translate(0,0) rotate(0) scale(.6);opacity:1}100%{transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1);opacity:0}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none}.js .intro{display:none}.draw path{stroke-dashoffset:0}}
 </style>
-<script>document.documentElement.classList.add('js')</script>
+<script>
+document.documentElement.classList.add('js', 'loading');
+// Failsafe: if the main script ever fails, never leave guests behind the intro doors.
+setTimeout(function () { var h = document.documentElement; if (h.classList.contains('loading')) h.classList.remove('loading', 'js'); }, 4000);
+</script>
 </head>
 <body>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="door l"></div><div class="door r"></div>
+  <div class="seal">R&nbsp;&amp;&nbsp;A</div>
+</div>
 
 <nav aria-label="Main menu" data-i18n-aria="navLabel">
   <a class="link" href="#home" data-i18n="navHome">Invitation</a>
@@ -172,6 +252,7 @@ footer .tel{display:inline-flex;align-items:center;gap:10px;min-height:44px;colo
     <button type="button" lang="en" data-lang="en" aria-pressed="true">English</button>
     <button type="button" lang="hi" data-lang="hi" aria-pressed="false">हिंदी</button>
   </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
 </nav>
 
 <header id="home">
@@ -183,13 +264,13 @@ footer .tel{display:inline-flex;align-items:center;gap:10px;min-height:44px;colo
 
   <div class="hero-in" id="heroIn">
     <p class="ganesh rise" data-i18n="ganesh">|| Shri Ganeshaya Namah ||</p>
-    <p class="shlok pre rise d1" data-i18n="shlok1">Vakratunda Mahakaya Suryakoti Samaprabha,
-Nirvighnam Kuru Me Deva Sarva Karyeshu Sarvada.</p>
+    <p class="shlok pre rise d1" lang="hi" style="font-family:'Tiro Devanagari Hindi',serif">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।
+निर्विघ्नं कुरु मे देव सर्व कार्येषु सर्वदा॥</p>
     <h1 class="gold-text rise d2" data-i18n="invite">Invitation</h1>
     <div class="couple rise d3">
       <span class="name" data-i18n="groom">Rupesh</span>
       <span class="weds"><span data-i18n="weds">weds</span>
-        <svg class="pulse" width="56" height="28" viewBox="0 0 56 28" fill="none" stroke="#FFD77A" stroke-width="2" aria-hidden="true"><circle cx="20" cy="14" r="10"/><circle cx="36" cy="14" r="10"/><path d="M28 2l3 4h-6z" fill="#FFD77A"/></svg>
+        <svg class="pulse" width="56" height="28" viewBox="0 0 56 28" fill="none" stroke="#FFD77A" stroke-width="2" aria-hidden="true"><circle class="ring-l" cx="20" cy="14" r="10"/><circle class="ring-r" cx="36" cy="14" r="10"/><path d="M28 2l3 4h-6z" fill="#FFD77A"/></svg>
       </span>
       <span class="name" data-i18n="bride">Anjali</span>
     </div>
@@ -211,8 +292,8 @@ Nirvighnam Kuru Me Deva Sarva Karyeshu Sarvada.</p>
 
 <section aria-labelledby="inv-h">
   <div class="inv">
-    <p class="reveal pre" style="margin:0;font-family:var(--f-serif);font-size:1.2rem;line-height:1.8;color:var(--maroon)" data-i18n="shlok2">Vighna Harana Mangala Karana, Shri Ganapati Maharaj,
-Pratham Nimantran Aapko, Puran Keejai Kaaj.</p>
+    <p class="reveal pre" lang="hi" style="margin:0;font-family:'Tiro Devanagari Hindi',serif;font-size:1.2rem;line-height:1.8;color:var(--maroon)">विघ्न हरण मंगल करन श्री गणपति महाराज।
+प्रथम निमन्त्रण आपको पूरन कीजै काज॥</p>
     <h2 id="inv-h" class="reveal" style="margin:8px 0 0;font-family:var(--f-display);font-weight:400;font-size:1.7rem;color:var(--maroon-d)" data-i18n="dear">Dear Family &amp; Friends,</h2>
     <p class="reveal" style="margin:0;font-size:1.2rem;color:var(--ink-2)" data-i18n="grace">With the infinite blessings of the Almighty,</p>
 
@@ -231,6 +312,7 @@ Pratham Nimantran Aapko, Puran Keejai Kaaj.</p>
       </article>
     </div>
 
+    <div class="flourish reveal draw" aria-hidden="true"><svg width="260" height="36" viewBox="0 0 260 36" fill="none" stroke="#C98A1A" stroke-width="1.6" stroke-linecap="round"><path d="M4 18h86c10 0 14-12 24-12s12 8 6 12"/><path d="M256 18h-86c-10 0-14-12-24-12s-12 8-6 12"/><path d="M130 6l8 12-8 12-8-12z"/></svg></div>
     <div class="om-row reveal">
       <svg class="spin" width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#7A1020"/><circle cx="32" cy="32" r="24" fill="none" stroke="#F2A900" stroke-width="2" stroke-dasharray="4 3"/><text x="32" y="42" text-anchor="middle" font-size="28" fill="#FFD77A" font-family="Tiro Devanagari Hindi, serif">ॐ</text></svg>
       <h2 class="h2" data-i18n="bandhan">Sacred Union in Marriage</h2>
@@ -243,6 +325,7 @@ Pratham Nimantran Aapko, Puran Keejai Kaaj.</p>
 
 <section id="events" class="events" aria-labelledby="ev-h">
   <div class="wrap" style="max-width:1200px;display:flex;flex-direction:column;align-items:center;gap:14px">
+    <div class="flourish reveal draw" aria-hidden="true"><svg width="260" height="36" viewBox="0 0 260 36" fill="none" stroke="#C98A1A" stroke-width="1.6" stroke-linecap="round"><path d="M4 18h86c10 0 14-12 24-12s12 8 6 12"/><path d="M256 18h-86c-10 0-14-12-24-12s-12 8-6 12"/><path d="M130 6l8 12-8 12-8-12z"/></svg></div>
     <p class="kicker" data-i18n="evKicker">|| Auspicious Dates ||</p>
     <h2 id="ev-h" class="h2 reveal" data-i18n="evTitle">Wedding Ceremonies</h2>
     <div class="grid g-4" style="margin-top:30px">
@@ -255,6 +338,7 @@ Pratham Nimantran Aapko, Puran Keejai Kaaj.</p>
         <svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><circle cx="27" cy="27" r="18" fill="#F2B705"/><circle cx="27" cy="27" r="10" fill="#E08A00"/><circle cx="27" cy="27" r="4" fill="#7A1020"/></svg>
         <h3 data-i18n="e2t">Matru Poojan &amp; Haldi</h3><div class="rule"></div>
         <p class="d" data-i18n="e2d">5 December 2026</p><p class="w" data-i18n="e2w">Saturday</p>
+        <p class="loc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s7-7 7-12a7 7 0 1 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span data-i18n="e2loc">Unnao</span></p>
       </article>
       <article class="arch main reveal">
         <svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true" fill="none" stroke="#FFD77A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 40c4-10 10-14 18-14l6-8 4 2-3 7c5 2 7 6 7 13"/><path d="M16 40v6M38 40v6M28 26v-6"/><circle cx="28" cy="14" r="4"/></svg>
@@ -307,6 +391,7 @@ Hussain Nagar, Unnao</p>
 </section>
 
 <section id="rsvp" class="rsvp-sec" aria-labelledby="rsvp-h">
+  <div class="lanterns" id="lanterns" aria-hidden="true"></div>
   <div class="rsvp-in">
     <p class="kicker" style="color:var(--gold-l)" data-i18n="rsvpKicker">R.S.V.P.</p>
     <h2 id="rsvp-h" class="reveal" style="margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(2.2rem,6vw,3.2rem)" data-i18n="rsvpTitle">Kindly Confirm Your Presence</h2>
@@ -366,6 +451,7 @@ Hussain Nagar, Unnao</p>
 
 <section id="family" aria-labelledby="fam-h">
   <div class="wrap" style="max-width:1150px;display:flex;flex-direction:column;align-items:center;gap:30px">
+    <div class="flourish reveal draw" aria-hidden="true"><svg width="260" height="36" viewBox="0 0 260 36" fill="none" stroke="#C98A1A" stroke-width="1.6" stroke-linecap="round"><path d="M4 18h86c10 0 14-12 24-12s12 8 6 12"/><path d="M256 18h-86c-10 0-14-12-24-12s-12 8-6 12"/><path d="M130 6l8 12-8 12-8-12z"/></svg></div>
     <h2 id="fam-h" class="h2 reveal" data-i18n="famTitle">With Love &amp; Warm Welcome</h2>
     <div class="grid g-3">
       <article class="fam reveal"><h3 data-i18n="fam1T">Eager to Meet You</h3><p class="pre" data-i18n="fam1">Om Prakash Shukla, Sandeep Pandey,
@@ -426,7 +512,7 @@ Aadya Pandey, Ankur Pandey</p></article>
       awaiting:'Eagerly awaiting your arrival…',
       evKicker:'|| Auspicious Dates ||', evTitle:'Wedding Ceremonies', mainDay:'Main wedding day',
       e1t:'Tel Poojan', e1d:'4 December 2026', e1w:'Friday', e1s:'Friday, 4 December',
-      e2t:'Matru Poojan & Haldi', e2d:'5 December 2026', e2w:'Saturday', e2s:'Saturday, 5 December',
+      e2t:'Matru Poojan & Haldi', e2d:'5 December 2026', e2w:'Saturday', e2s:'Saturday, 5 December', e2loc:'Unnao',
       e3t:'Var Yatra (Baraat)', e3d:'6 December 2026', e3w:'Sunday', e3s:'Sunday, 6 December',
       e4t:'Vadhu Aagman', e4d:'7 December 2026', e4w:'Monday', e4s:'Monday, 7 December',
       baraatTitle:'Baraat Departure', baraatText:'The baraat will leave our residence for the venue at 4:00 PM on Sunday, 6 December 2026.',
@@ -466,7 +552,7 @@ Aadya Pandey, Ankur Pandey</p></article>
       awaiting:'आपके आगमन की प्रतीक्षा में…',
       evKicker:'॥ शुभ मुहूर्त ॥', evTitle:'मांगलिक कार्यक्रम', mainDay:'मुख्य विवाह दिवस',
       e1t:'तेल पूजन', e1d:'4 दिसम्बर 2026', e1w:'दिन शुक्रवार', e1s:'शुक्रवार, 4 दिसम्बर',
-      e2t:'मातृ पूजन–हल्दी', e2d:'5 दिसम्बर 2026', e2w:'दिन शनिवार', e2s:'शनिवार, 5 दिसम्बर',
+      e2t:'मातृ पूजन–हल्दी', e2d:'5 दिसम्बर 2026', e2w:'दिन शनिवार', e2s:'शनिवार, 5 दिसम्बर', e2loc:'उन्नाव',
       e3t:'वर–यात्रा', e3d:'6 दिसम्बर 2026', e3w:'दिन रविवार', e3s:'रविवार, 6 दिसम्बर',
       e4t:'वधू आगमन', e4d:'7 दिसम्बर 2026', e4w:'दिन सोमवार', e4s:'सोमवार, 7 दिसम्बर',
       baraatTitle:'बारात प्रस्थान', baraatText:'बारात हमारे निज निवास से सायं 4 बजे, रविवार 6 दिसम्बर 2026 को विवाह स्थल हेतु प्रस्थान करेगी।',
@@ -535,6 +621,16 @@ Aadya Pandey, Ankur Pandey</p></article>
       p.style.animationDuration = (9 + (i * 7) % 8) + 's'; p.style.animationDelay = '-' + ((i * 13) % 11) + 's';
       box.appendChild(p);
     }
+    var nS = window.innerWidth < 640 ? 14 : 28;
+    for (var k = 0; k < nS; k++) {
+      var s = document.createElement('span'), sz = 6 + (k % 4) * 3;
+      s.className = 'spark';
+      s.style.left = ((k * 53 + 7) % 100) + '%'; s.style.top = ((k * 29 + 11) % 90) + '%';
+      s.style.width = s.style.height = sz + 'px';
+      s.style.animationDuration = (2.4 + (k % 5) * 0.5) + 's';
+      s.style.animationDelay = '-' + ((k * 0.7) % 3).toFixed(1) + 's';
+      box.appendChild(s);
+    }
   })();
   (function buildToran() {
     var box = $('#toran'), cols = ['#F2A900', '#E86A10', '#FFD24A'];
@@ -548,21 +644,62 @@ Aadya Pandey, Ankur Pandey</p></article>
     }
   })();
 
-  /* ---------- scroll reveal ---------- */
+  var reduce = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  (function buildLanterns() {
+    var box = $('#lanterns');
+    for (var i = 0; i < 9; i++) {
+      var l = document.createElement('span'), w = 16 + (i % 3) * 5;
+      l.className = 'lantern';
+      l.style.left = (6 + (i * 41) % 88) + '%';
+      l.style.width = w + 'px'; l.style.height = Math.round(w * 1.4) + 'px';
+      l.style.animationDuration = (14 + (i * 5) % 9) + 's';
+      l.style.animationDelay = '-' + ((i * 3.3) % 14).toFixed(1) + 's';
+      box.appendChild(l);
+    }
+  })();
+
+  /* ---------- scroll: progress bar + mandala parallax ---------- */
+  var mandalaBg = $('.mandala-bg'), prog = $('#progress'), ticking = false;
+  function onScroll() {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () {
+      var y = window.scrollY, max = document.documentElement.scrollHeight - innerHeight;
+      prog.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0) + ')';
+      if (!reduce && y < innerHeight * 1.5) mandalaBg.style.transform = 'translateY(' + (y * 0.35) + 'px)';
+      ticking = false;
+    });
+  }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  /* ---------- scroll reveal (staggered inside grids) ---------- */
+  $$('.grid').forEach(function (g) {
+    Array.prototype.forEach.call(g.children, function (c, i) { if (c.classList.contains('reveal')) c.style.transitionDelay = (i * 0.14) + 's'; });
+  });
   if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.12 });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target; el.classList.add('in'); io.unobserve(el);
+        setTimeout(function () { el.style.transitionDelay = ''; }, 1600); // keep hover snappy afterwards
+      });
+    }, { threshold: 0.12 });
     $$('.reveal').forEach(function (el) { io.observe(el); });
   } else { $$('.reveal').forEach(function (el) { el.classList.add('in'); }); }
 
   /* ---------- countdown ---------- */
   function pad(n) { return String(n).padStart(2, '0'); }
+  function setNum(el, v) {
+    if (el.textContent === v) return;
+    el.textContent = v; el.classList.remove('flip'); void el.offsetWidth; el.classList.add('flip');
+  }
   function tick() {
     var diff = WEDDING_AT - Date.now();
     if (diff <= 0) { $('#countdown').hidden = true; $('#started').hidden = false; return false; }
     var d = Math.floor(diff / 864e5); diff -= d * 864e5;
     var h = Math.floor(diff / 36e5); diff -= h * 36e5;
     var m = Math.floor(diff / 6e4); diff -= m * 6e4;
-    $('#cdD').textContent = pad(d); $('#cdH').textContent = pad(h); $('#cdM').textContent = pad(m); $('#cdS').textContent = pad(Math.floor(diff / 1e3));
+    setNum($('#cdD'), pad(d)); setNum($('#cdH'), pad(h)); setNum($('#cdM'), pad(m)); setNum($('#cdS'), pad(Math.floor(diff / 1e3)));
     return true;
   }
   if (tick()) { var timer = setInterval(function () { if (!tick()) clearInterval(timer); }, 1000); }
@@ -601,6 +738,22 @@ Aadya Pandey, Ankur Pandey</p></article>
     $('#waLink').href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(waText(r));
   }
 
+  function burst(anchor) {
+    if (reduce) return;
+    var b = anchor.getBoundingClientRect(), cx = b.left + b.width / 2, cy = b.top + 60;
+    var cols = ['#F2A900', '#E86A10', '#FFD24A', '#D9480F', '#7A1020', '#FFF1C1'];
+    for (var i = 0; i < 46; i++) {
+      var p = document.createElement('span'), a = (i / 46) * Math.PI * 2, dist = 120 + Math.random() * 180;
+      p.className = 'burst';
+      p.style.left = cx + 'px'; p.style.top = cy + 'px'; p.style.background = cols[i % cols.length];
+      p.style.setProperty('--x', Math.cos(a) * dist + 'px');
+      p.style.setProperty('--y', (Math.sin(a) * dist + 140) + 'px');
+      p.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
+      document.body.appendChild(p);
+      setTimeout(p.remove.bind(p), 1700);
+    }
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (form.website.value) return; // bot
@@ -616,6 +769,7 @@ Aadya Pandey, Ankur Pandey</p></article>
       renderThanks(saved);
       var th = $('#thanks');
       form.hidden = true; th.hidden = false; th.setAttribute('tabindex', '-1'); th.focus();
+      burst(th);
       btn.disabled = false; btn.textContent = D[lang].submit;
     };
     if (!SHEET_URL) return done(false);
@@ -634,6 +788,14 @@ Aadya Pandey, Ankur Pandey</p></article>
   /* ---------- init ---------- */
   var q = new URLSearchParams(location.search).get('lang');
   applyLang(q || store('wedding-lang') || DEFAULT_LANG);
+
+  /* ---------- intro doors ---------- */
+  var intro = $('#intro'), root = document.documentElement;
+  if (reduce) { root.classList.remove('loading'); intro.classList.add('gone'); }
+  else setTimeout(function () {
+    intro.classList.add('open'); root.classList.remove('loading');
+    setTimeout(function () { intro.classList.add('gone'); }, 1600);
+  }, 900);
 })();
 </script>
 </body>
