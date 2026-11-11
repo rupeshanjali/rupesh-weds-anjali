@@ -217,6 +217,14 @@ header::before{content:"";position:absolute;inset:-20%;background:radial-gradien
 .lantern::before{content:"";position:absolute;top:-4px;left:25%;right:25%;height:4px;border-radius:2px;background:#7A1020}
 .burst{position:fixed;width:14px;height:14px;border-radius:60% 0 60% 0;pointer-events:none;z-index:90;animation:burst 1.6s cubic-bezier(.15,.7,.3,1) forwards}
 
+/* Om: stays upright — a soft divine glow with a ripple, like a temple bell's resonance */
+.om-mark{border-radius:50%;animation:omGlow 3s ease-in-out infinite}
+.om-late{animation-delay:1.5s}
+@keyframes omGlow{
+  0%{transform:scale(1);box-shadow:0 0 0 0 rgba(242,169,0,.55),0 0 12px 2px rgba(242,169,0,.3)}
+  50%{transform:scale(1.07);box-shadow:0 0 0 16px rgba(242,169,0,0),0 0 28px 8px rgba(242,169,0,.55)}
+  100%{transform:scale(1);box-shadow:0 0 0 0 rgba(242,169,0,0),0 0 12px 2px rgba(242,169,0,.3)}
+}
 @keyframes breathe{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
 @keyframes twinkle{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
 @keyframes nameIn{from{opacity:0;filter:blur(14px);letter-spacing:.35em}to{opacity:1;filter:blur(0);letter-spacing:normal}}
@@ -314,9 +322,9 @@ setTimeout(function () { var h = document.documentElement; if (h.classList.conta
 
     <div class="flourish reveal draw" aria-hidden="true"><svg width="260" height="36" viewBox="0 0 260 36" fill="none" stroke="#C98A1A" stroke-width="1.6" stroke-linecap="round"><path d="M4 18h86c10 0 14-12 24-12s12 8 6 12"/><path d="M256 18h-86c-10 0-14-12-24-12s-12 8-6 12"/><path d="M130 6l8 12-8 12-8-12z"/></svg></div>
     <div class="om-row reveal">
-      <svg class="spin" width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#7A1020"/><circle cx="32" cy="32" r="24" fill="none" stroke="#F2A900" stroke-width="2" stroke-dasharray="4 3"/><text x="32" y="42" text-anchor="middle" font-size="28" fill="#FFD77A" font-family="Tiro Devanagari Hindi, serif">ॐ</text></svg>
+      <svg class="om-mark" width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#7A1020"/><circle cx="32" cy="32" r="24" fill="none" stroke="#F2A900" stroke-width="2" stroke-dasharray="4 3"/><text x="32" y="42" text-anchor="middle" font-size="28" fill="#FFD77A" font-family="Tiro Devanagari Hindi, serif">ॐ</text></svg>
       <h2 class="h2" data-i18n="bandhan">Sacred Union in Marriage</h2>
-      <svg class="spin-rev" width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#7A1020"/><circle cx="32" cy="32" r="24" fill="none" stroke="#F2A900" stroke-width="2" stroke-dasharray="4 3"/><text x="32" y="42" text-anchor="middle" font-size="28" fill="#FFD77A" font-family="Tiro Devanagari Hindi, serif">ॐ</text></svg>
+      <svg class="om-mark om-late" width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#7A1020"/><circle cx="32" cy="32" r="24" fill="none" stroke="#F2A900" stroke-width="2" stroke-dasharray="4 3"/><text x="32" y="42" text-anchor="middle" font-size="28" fill="#FFD77A" font-family="Tiro Devanagari Hindi, serif">ॐ</text></svg>
     </div>
     <p class="reveal" style="margin:0;max-width:760px;font-size:1.2rem;line-height:1.9;color:#4A2A20" data-i18n="bandhanText">We earnestly seek your gracious presence at these auspicious moments. We humbly request you to accept this heartfelt invitation and bless the new couple’s journey of life with your good wishes.</p>
     <p class="reveal" style="margin:0;font-family:var(--f-serif);font-style:italic;font-size:1.25rem;color:var(--maroon)" data-i18n="awaiting">Eagerly awaiting your arrival…</p>
